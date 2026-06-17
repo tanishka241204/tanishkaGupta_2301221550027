@@ -15,4 +15,3 @@ class Solution {
         return x == reversedHalf || x == reversedHalf / 10;
     }
 }
-explain this code line by line in easy understandable language
