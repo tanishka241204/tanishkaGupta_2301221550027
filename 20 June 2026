@@ -1,0 +1,69 @@
+class Solution {
+    public int fib(int n) {
+        if (n <= 1) {
+            return n;
+        }
+
+        int a = 0;
+        int b = 1;
+
+        for (int i = 2; i <= n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+
+        return b;
+    }
+}
+---------------------------------------------------------------
+class Solution {
+    public int climbStairs(int n) {
+        if (n <= 2) {
+            return n;
+        }
+
+        int a = 1; // ways to reach step 1
+        int b = 2; // ways to reach step 2
+
+        for (int i = 3; i <= n; i++) {
+            int c = a + b;
+            a = b;
+            b = c;
+        }
+
+        return b;
+    }
+}
+---------------------------------------------------------import java.util.*;
+
+class Solution {
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(candidates, target, 0, new ArrayList<>(), result);
+        return result;
+    }
+
+    private void backtrack(int[] candidates, int target, int start,
+                           List<Integer> current, List<List<Integer>> result) {
+
+        if (target == 0) {
+            result.add(new ArrayList<>(current));
+            return;
+        }
+
+        if (target < 0) {
+            return;
+        }
+
+        for (int i = start; i < candidates.length; i++) {
+            current.add(candidates[i]);
+
+            // i is passed again because the same number can be reused
+            backtrack(candidates, target - candidates[i], i, current, result);
+
+            // Backtrack
+            current.remove(current.size() - 1);
+        }
+    }
+}
