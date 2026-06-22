@@ -1,119 +1,106 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
+class Solution {
+    public ListNode middleNode(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
 
-struct ListNode* middleNode(struct ListNode* head) {
-    struct ListNode *slow = head;
-    struct ListNode *fast = head;
-
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-    }
-
-    return slow;
-}
-
--------------------------------------------------------------------------------------------------------------------
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
-
-void deleteNode(struct ListNode* node) {
-    node->val = node->next->val;
-    node->next = node->next->next;
-}
-
--------------------------------------------------------------------------------------------------------------------
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     struct ListNode *next;
- * };
- */
-
-bool hasCycle(struct ListNode *head) {
-    struct ListNode *slow = head;
-    struct ListNode *fast = head;
-
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
-
-        if (slow == fast) {
-            return true;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
         }
+
+        return slow;
     }
-
-    return false;
 }
+---------------------------------------------------------------------------
 
---------------------------------------------------------------------------------------------------------------------
+class Solution {
+    public void deleteNode(ListNode node) {
+        node.val = node.next.val;
+        node.next = node.next.next;
+    }
+}
+--------------------------------------------------------------------------------
 
-bool isValid(char* s) {
-    char stack[10000];
-    int top = -1;
+class Solution {
+    public boolean hasCycle(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
 
-    for (int i = 0; s[i] != '\0'; i++) {
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
 
-        if (s[i] == '(' || s[i] == '{' || s[i] == '[') {
-            stack[++top] = s[i];
-        }
-        else {
-
-            if (top == -1)
-                return false;
-
-            if ((s[i] == ')' && stack[top] == '(') ||
-                (s[i] == '}' && stack[top] == '{') ||
-                (s[i] == ']' && stack[top] == '[')) {
-                top--;
-            }
-            else {
-                return false;
+            if (slow == fast) {
+                return true;
             }
         }
+
+        return false;
     }
-
-    return top == -1;
 }
+----------------------------------------------------------------------------------
 
--------------------------------------------------------------------------------------------------------------------------
-#include <stdio.h>
+class Solution {
+    public boolean isValid(String s) {
+        char[] stack = new char[10000];
+        int top = -1;
 
-int undo[10], redo[10];
-int utop = -1, rtop = -1;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
 
-int main() {
-    undo[++utop] = 10;
-    undo[++utop] = 20;
-    undo[++utop] = 30;
+            if (ch == '(' || ch == '{' || ch == '[') {
+                stack[++top] = ch;
+            } else {
 
-    printf("Undo Stack: ");
-    for(int i = utop; i >= 0; i--)
-        printf("%d ", undo[i]);
+                if (top == -1)
+                    return false;
 
-    redo[++rtop] = undo[utop--];
+                if ((ch == ')' && stack[top] == '(') ||
+                    (ch == '}' && stack[top] == '{') ||
+                    (ch == ']' && stack[top] == '[')) {
+                    top--;
+                } else {
+                    return false;
+                }
+            }
+        }
 
-    printf("\nAfter Undo: ");
-    for(int i = utop; i >= 0; i--)
-        printf("%d ", undo[i]);
-
-    undo[++utop] = redo[rtop--];
-
-    printf("\nAfter Redo: ");
-    for(int i = utop; i >= 0; i--)
-        printf("%d ", undo[i]);
-
-    return 0;
+        return top == -1;
+    }
 }
--------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------
+
+public class UndoRedo {
+    public static void main(String[] args) {
+
+        int[] undo = new int[10];
+        int[] redo = new int[10];
+
+        int utop = -1;
+        int rtop = -1;
+
+        undo[++utop] = 10;
+        undo[++utop] = 20;
+        undo[++utop] = 30;
+
+        System.out.print("Undo Stack: ");
+        for (int i = utop; i >= 0; i--) {
+            System.out.print(undo[i] + " ");
+        }
+
+        redo[++rtop] = undo[utop--];
+
+        System.out.print("\nAfter Undo: ");
+        for (int i = utop; i >= 0; i--) {
+            System.out.print(undo[i] + " ");
+        }
+
+        undo[++utop] = redo[rtop--];
+
+        System.out.print("\nAfter Redo: ");
+        for (int i = utop; i >= 0; i--) {
+            System.out.print(undo[i] + " ");
+        }
+    }
+}
+-----------------------------------------------------------------------------------
