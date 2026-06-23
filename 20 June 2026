@@ -3,39 +3,34 @@ class Solution {
         if (n <= 1) {
             return n;
         }
-
         int a = 0;
         int b = 1;
-
         for (int i = 2; i <= n; i++) {
             int c = a + b;
             a = b;
             b = c;
         }
-
         return b;
     }
 }
----------------------------------------------------------------
+-------------------------------------------------------------------------------
 class Solution {
     public int climbStairs(int n) {
         if (n <= 2) {
             return n;
         }
-
         int a = 1; // ways to reach step 1
         int b = 2; // ways to reach step 2
-
         for (int i = 3; i <= n; i++) {
             int c = a + b;
             a = b;
             b = c;
         }
-
         return b;
     }
 }
----------------------------------------------------------import java.util.*;
+----------------------------------------------------------------------------------------
+import java.util.*;
 
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
@@ -43,27 +38,94 @@ class Solution {
         backtrack(candidates, target, 0, new ArrayList<>(), result);
         return result;
     }
-
     private void backtrack(int[] candidates, int target, int start,
                            List<Integer> current, List<List<Integer>> result) {
-
         if (target == 0) {
             result.add(new ArrayList<>(current));
             return;
         }
-
         if (target < 0) {
             return;
         }
-
         for (int i = start; i < candidates.length; i++) {
             current.add(candidates[i]);
-
-            // i is passed again because the same number can be reused
             backtrack(candidates, target - candidates[i], i, current, result);
-
-            // Backtrack
             current.remove(current.size() - 1);
         }
+    }
+}
+--------------------------------------------------------------------------------------
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int left = 1;
+        int right = 0;
+
+        for (int pile : piles) {
+            right = Math.max(right, pile);
+        }
+
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+
+            if (canFinish(piles, h, mid)) {
+                right = mid; 
+            } else {
+                left = mid + 1; 
+            }
+        }
+
+        return left;
+    }
+
+    private boolean canFinish(int[] piles, int h, int k) {
+        long hours = 0;
+
+        for (int pile : piles) {
+            hours += (pile + k - 1) / k; 
+        }
+
+        return hours <= h;
+    }
+}
+---------------------------------------------------------------------------------------------------------
+import java.util.*;
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+
+        Arrays.sort(nums);
+
+        for (int i = 0; i < nums.length - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) {
+                continue;
+            }
+
+            int left = i + 1;
+            int right = nums.length - 1;
+
+            while (left < right) {
+                int sum = nums[i] + nums[left] + nums[right];
+
+                if (sum == 0) {
+                    result.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    while (left < right && nums[left] == nums[left + 1]) {
+                        left++;
+                    }
+                    while (left < right && nums[right] == nums[right - 1]) {
+                        right--;
+                    }
+
+                    left++;
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+
+        return result;
     }
 }
